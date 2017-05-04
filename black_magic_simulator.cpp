@@ -1,7 +1,7 @@
 #include <cstdio>
-#include "hysteresis.hpp"
 #include "programma.hpp"
 #include "getters.hpp"
+#include "hysteresis.hpp"
 
 using namespace std;
 
@@ -283,7 +283,9 @@ int main (){
 		output1 = black_magic_box (input);
 		// printf("%i\t%hu\t\t", input.output.heater, input.temperatura);
 		printout (output1, input);
+
 		//apply output1
+
 		output2 = output1;
 	}
 }
