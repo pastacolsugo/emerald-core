@@ -1,4 +1,5 @@
 #include <cstdio>
+#include "data_struct.hpp"
 #include "programma.hpp"
 #include "getters.hpp"
 #include "hysteresis.hpp"
