@@ -1,0 +1,31 @@
+
+Il controllo della temperatura e dell'umidita' viene effettuato con una doppia isteresi.
+In riferimento alla temperatura, abbiamo 
+
+	^
+	|
+	|  freddo			ok				caldo
+1	|---------+->-+               +-<-+----------------
+	|         |   |               |   |
+	|         ^   v               v   ^
+	|         |   |               |   |
+0	|         +-<-+---------------+->-+           Temperatura
+	+---------+-+-+-------+-------+-+-+--------------------->
+			  A B C       D       E F G
+	 riscaldamento				    raffreddamento
+
+legenda:
+D 	-	temperatura ideale
+DB 	-	delta temperatura inferiore
+		range accettabile verso il basso
+DF	- 	delta temperatura superiore
+		range accettabile verso l'alto
+B 	- 	temperatura centrale dell'isteresi del riscaldamento
+A e C  	temperature di cambio stato del sistema di riscaldamento
+BA e BC delta dell'isteresi
+F  	-	temperatura centrale dell'isteresi del raffreddamento
+E e G 	temperature di cambio stato del raffreddamento
+FE e FG delta dell'isteresi
+
+In questa configurazione si stabilisce il parametro D della temperatura ideale da mantenere, nel programma della temperatura. Impostando gli intervalli BD e DF si stabilisce il range di temperatura accettabile (unico per tutto il programma). Si possono stabilire anche gli intervalli BA, BC, FE e FG per generare l'isteresi voluta.
+
