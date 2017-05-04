@@ -1,4 +1,5 @@
 #include <cstdio>
+#include "hysteresis.hpp"
 #include "programma.hpp"
 #include "getters.hpp"
 
@@ -25,9 +26,16 @@ bool_pair makeBoolPair (bool a, bool b){
 	return res;
 }
 
-black_magic_data packItUp (TIME tempo_attuale, usi temperatura_in, usi temperatura_out, usi umidita, OUT old_output){
-	
-	black_magic_data res = {tempo_attuale, temperatura_in, temperatura_out, umidita, old_output};
+black_magic_data packItUp (TIME tempo_attuale, usi temperatura_in,
+	usi temperatura_out, usi umidita, OUT old_output){
+
+	black_magic_data res = {
+		tempo_attuale, 
+		temperatura_in, 
+		temperatura_out, 
+		umidita, 
+		old_output
+	};
 
 	return res;
 }
@@ -100,42 +108,6 @@ bool findCrepuscolo (TIME req, usi stag){
 		}
 	}
 	return res;
-}
-
-bool hysteresis (HYS req){
-	// proven working correctly
-	// 2 April 2017
-	if (req.stato == false){
-		if (req.value >= req.zero + req.d_sup){
-			return 1;
-		} else {
-			return 0;
-		}
-	} else {
-		if (req.value <= req.zero - req.d_inf){
-			return 0;
-		} else {
-			return 1;
-		}
-	}
-}
-
-bool reverse_hysteresis (HYS req){
-	// proven working correctly
-	// 2 April 2017
-	if (req.stato == true){
-		if (req.value >= req.zero + req.d_sup){
-			return 0;
-		} else {
-			return 1;
-		}
-	} else {
-		if (req.value <= req.zero - req.d_inf){
-			return 1;
-		} else {
-			return 0;
-		}
-	}
 }
 
 bool_triple findHeater (TIME req, usi stag, usi temperatura_inside, usi temperatura_outside, bool_pair stato){
