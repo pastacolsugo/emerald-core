@@ -2,17 +2,17 @@
 Il controllo della temperatura e dell'umidita' viene effettuato con una doppia isteresi.
 In riferimento alla temperatura, abbiamo 
 
-	^
-	|
-	|  freddo			ok				caldo
-1	|---------+->-+               +-<-+----------------
-	|         |   |               |   |
-	|         ^   v               v   ^
-	|         |   |               |   |
-0	|         +-<-+---------------+->-+           Temperatura
-	+---------+-+-+-------+-------+-+-+--------------------->
-			  A B C       D       E F G
-	 riscaldamento				    raffreddamento
+    ^
+    |
+    |  freddo            ok              caldo
+1   |---------+->-+               +-<-+----------------
+    |         |   |               |   |
+    |         ^   v               v   ^
+    |         |   |               |   |
+0   |         +-<-+---------------+->-+           Temperatura
+    +---------+-+-+-------+-------+-+-+--------------------->
+              A B C       D       E F G
+      riscaldamento                    raffreddamento
 
 legenda:
 D 	-	temperatura ideale

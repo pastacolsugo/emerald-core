@@ -10,12 +10,14 @@ usi index = 0;
 
 void printout (OUT req, black_magic_data t){
 	// printf("luci: %d\the: %d\tcool: %d\thum: %d\tdehum: %d\n", req.luci, req.heater, req.cooler, req.hum, req.dehum);
-	printf("%i) %i %i - %i:%i\t", index++, t.time.giorno, t.time.mese, t.time.ore, t.time.minuti);
+	// printf("%i) %i %i - %i:%i\t", index++, t.time.giorno, t.time.mese, t.time.ore, t.time.minuti);
 	printf("%i\t", t.temperatura_inside);
 	// printf("luci: %i ", req.luci);
 	// printf("crep: %i ", req.crepuscolo);
-	printf("heat: %i ", req.heater);
-	printf("cool: %i ", req.cooler);
+	// printf("heat: %i ", req.heater);
+	// printf("cool: %i ", req.cooler);
+	printf("%i", req.heater == 1? 100 : 0);
+	// printf("%i", req.cooler);
 	// printf("humi: %i ", req.hum);
 	// printf("dehu: %i ", req.dehum);
 	printf("\n");
@@ -111,7 +113,38 @@ bool findCrepuscolo (TIME req, usi stag){
 	return res;
 }
 
-bool_triple findHeater (TIME req, usi stag, usi temperatura_inside, usi temperatura_outside, bool_pair stato){
+bool airSource (usi target, usi temp_in, usi temp_out){
+	// computing inside delta temperature
+	usi delta_in = target - temp_in;
+
+	// taking the absolute value
+	delta_in = (delta_in > 0)? delta_in : -delta_in;
+
+	// computing outside delta temperature
+	usi delta_out = target - temp_out;
+
+	// taking the absolute value
+	delta_out = (delta_out > 0)? delta_out : -delta_out;
+
+	bool air_from_inside = 0; // false = aria da fuori - true aria da dentro
+
+	// choose between inside and outside air
+	if (delta_out < delta_in) { 
+		// taking air from outside
+		air_from_inside = false;
+		// temp_sens = temperatura_outside;
+	} else {
+		// taking air from inside
+		air_from_inside = true;
+		// temp_sens = temperatura_inside;
+	}
+
+	// setting the third output value as the air source
+	return air_from_inside;
+}
+
+bool_triple findHeater (TIME req, usi stag, usi temperatura_inside, 
+						usi temperatura_outside, bool_pair stato){
 	// res.first	=	heater output value
 	// res.second	=	cooler output value
 	// res.third	=	air source [inside = true - outside = false]
@@ -130,45 +163,20 @@ bool_triple findHeater (TIME req, usi stag, usi temperatura_inside, usi temperat
 	res.first = false;
 	res.second = false;
 	res.third = false;
+	
+	res.third = airSource(t_zero, temperatura_inside, temperatura_outside);	
 
-	// computing inside delta temperature
-	usi delta_in = t_zero - temperatura_inside;
+	usi temp_choose = (res.third)? temperatura_inside : temperatura_outside;
 
-	// taking the absolute value
-	delta_in = (delta_in > 0)? delta_in : -delta_in;
+	HYS heatReq = {stato.first, temp_choose, t_zero-dT_inf, heat_dT_inf, heat_dT_sup};
+	res.first = reverse_hysteresis(heatReq);
 
-	// computing outside delta temperature
-	usi delta_out = t_zero - temperatura_outside;
-
-	// taking the absolute value
-	delta_out = (delta_out > 0)? delta_out : -delta_out;
-
-	usi temp_sens;
-	bool air_from_inside = 0; // false = aria da fuori - true aria da dentro
-
-	// choose between inside and outside air
-	if (delta_out < delta_in) { 
-		// taking air from outside
-		air_from_inside = false;
-		temp_sens = temperatura_outside;
-	} else {
-		// taking air from inside
-		air_from_inside = true;
-		temp_sens = temperatura_inside;
-	}
-
-	// setting the third output value as the air source
-	res.third = air_from_inside;
-
-	HYS heatReq = {stato.first, temp_sens, t_zero-dT_inf, heat_dT_inf, heat_dT_sup};
-	res.first = reverse_hysteresis (heatReq);
-
-	HYS coolReq = {stato.second, temp_sens, t_zero+dT_sup, cool_dT_inf, cool_dT_sup};
+	HYS coolReq = {stato.second, temp_choose, t_zero+dT_sup, cool_dT_inf, cool_dT_sup};
 	res.second = hysteresis (coolReq);
 
 	if (res.first == true && res.second == true){
 		printf("%i/%i - %i:%i :: ERROR :: findHeater reported double true output\n", req.giorno, req.mese, req.ore, req.minuti);
-		printf("\tseason: %i + hum: %i + state: %i %i\n", stag, temp_sens, stato.first, stato.second);
+		printf("\tseason: %i + hum: %i + state: %i %i\n", stag, temp_choose, stato.first, stato.second);
 		printf("System override, switching both off... ");
 		res.first = false;
 		res.second = false;

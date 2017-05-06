@@ -83,13 +83,13 @@ const HML CREPUSCOLO[][nCrep] = {
 const unsigned short int nT = 4; //numero temperature
 
 
-const unsigned short int dT_sup = 10;
-const unsigned short int dT_inf = 10;
+unsigned short int dT_sup = 10;
+unsigned short int dT_inf = 10;
 
-const unsigned short int heat_dT_sup = 3;
-const unsigned short int heat_dT_inf = 3;
-const unsigned short int cool_dT_sup = 3;
-const unsigned short int cool_dT_inf = 3;
+unsigned short int heat_dT_sup = 3;
+unsigned short int heat_dT_inf = 3;
+unsigned short int cool_dT_sup = 3;
+unsigned short int cool_dT_inf = 3;
 
 const HMT TEMPERATURA[][nT] = {		//mancano le stagioni!
 	{
