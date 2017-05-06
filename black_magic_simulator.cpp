@@ -253,6 +253,32 @@ OUT black_magic_box (black_magic_data req){
 	return res;
 }
 
+black_magic_data getData (){
+	// reading time from the RTC
+	TIME act_time = getTime();
+
+	// fake check to terminate testing
+	if (act_time.mese == 0){
+		return 0;
+	}
+
+	// reading inside temperature
+	usi act_temp_inside = getTempInside();	
+
+	// reading outside temperature
+	// usi act_temp_outside = getTempOutside();
+	usi act_temp_outside = 0;
+
+	// reading inside humidity
+	usi act_hum = getHum();
+
+	// create a variable containing all the data needed
+	// time, sensor reading and last output configuration
+	input = packItUp(act_time, act_temp_inside, act_temp_outside, act_hum, output2);
+
+	return input;
+}
+
 int main (){
 
 	freopen ("/Users/sugo/Google Drive/serra_mirko/v2/day_sim.txt", "r", stdin);
@@ -265,31 +291,12 @@ int main (){
 	while (true){
 		black_magic_data input;
 
-		// reading time from the RTC
-		TIME act_time = getTime();
-
-		// fake check to terminate testing
-		if (act_time.mese == 0){
-			return 0;
-		}
-
-		// reading inside temperature
-		usi act_temp_inside = getTempInside();	
-
-		// reading outside temperature
-		// usi act_temp_outside = getTempOutside();
-		usi act_temp_outside = 0;
-
-		// reading inside humidity
-		usi act_hum = getHum();
-
-		// create a variable containing all the data needed
-		// time, sensor reading and last output configuration
-		input = packItUp(act_time, act_temp_inside, act_temp_outside, act_hum, output2);
+		input = getData();	
 
 		// black_magic_box is going to compute the next output configuration
 		// taking the actual state as input
 		output1 = black_magic_box (input);
+		
 		// printf("%i\t%hu\t\t", input.output.heater, input.temperatura);
 		printout (output1, input);
 
