@@ -3,6 +3,7 @@
 #include "programma.hpp"
 #include "getters.hpp"
 #include "hysteresis.hpp"
+#include "finder_1.hpp"
 
 using namespace std;
 
@@ -22,81 +23,6 @@ void printout (OUT req, black_magic_data t){
 	// printf("dehu: %i ", req.dehum);
 	printf("\n");
 
-}
-
-bool_pair makeBoolPair (bool a, bool b){
-	bool_pair res = {a, b};
-	return res;
-}
-
-// se sono nell'ordine temporale corretto (t1 prima di t2) = 1
-// se sono lo stesso momento  (t1 == t2) = 0
-// se sono nell'ordine temporale inverso (t1 dopo t2) = -1
-short int compareTIME (TIME t1, TIME t2){		// 1 t1 before t2 / 0 t1==t2 / -1 t1 after t2
-	if (t1.mese < t2.mese){				
-		return 1;
-	}
-	if (t1.mese > t2.mese){
-		return -1;
-	}
-
-	if (t1.giorno < t2.giorno){
-		return 1;
-	}	
-	if (t1.giorno > t2.giorno){
-		return -1;
-	}
-
-	if (t1.ore < t2.ore){
-		return 1;
-	}
-	if (t1.ore > t2.ore){
-		return -1;
-	}
-
-	if (t1.minuti < t2.minuti){
-		return 1;
-	}
-	if (t1.minuti > t2.minuti){
-		return -1;
-	}
-	return 0;
-}
-
-usi findStagione (TIME req){
-	usi res = nS-1;
-	for (usi i=1; i<nS; i++){
-		TIME temp = { STAGIONI[i].mese, STAGIONI[i].giorno, 0, 0};
-		if (compareTIME(req, temp) == 1){
-			res = STAGIONI[i-1].stagione;
-			break;
-		}
-	}
-	return res;
-}
-
-bool findLuci (TIME req, usi stag){
-	bool res = LUCI[stag][nL-1].stato;
-	for (int i=1; i<nL; i++){
-		TIME temp = {req.mese, req.giorno, LUCI[stag][i].orario.ore, LUCI[stag][i].orario.minuti};	//creo un TIME con mese e giorno odierni, ore e minuti del programma
-		if (compareTIME(req, temp) == 1){		//per poter fare il paragone delle date
-			res = LUCI[stag][i-1].stato;
-			break;
-		}
-	}
-	return res;
-}
-
-bool findCrepuscolo (TIME req, usi stag){
-	bool res = CREPUSCOLO[stag][nCrep-1].stato;
-	for (int i=1; i<nCrep; i++){
-		TIME temp = {req.mese, req.giorno, CREPUSCOLO[stag][i].orario.ore, CREPUSCOLO[stag][i].orario.minuti};	//creo un TIME con mese e giorno odierni, ore e minuti del programma
-		if (compareTIME(req, temp) == 1){		//per poter fare il paragone delle date
-			res = CREPUSCOLO[stag][i-1].stato;
-			break;
-		}
-	}
-	return res;
 }
 
 bool airSource (usi target, usi temp_in, usi temp_out){
@@ -253,6 +179,12 @@ int main (){
 
 		input = getData();	
 
+		input.output = output2;
+		
+		if (input.time.mese == 0){
+			return 0;
+		}
+		
 		// black_magic_box is going to compute the next output configuration
 		// taking the actual state as input
 		output1 = black_magic_box (input);
