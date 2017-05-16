@@ -19,8 +19,8 @@ void printout (OUT req, black_magic_data t){
 	// printf("crep: %i ", req.crepuscolo);
 	// printf("heat: %i ", req.heater);
 	// printf("cool: %i ", req.cooler);
-	printf("%i", req.heater == 1? 100 : 0);
-	// printf("%i", req.cooler);
+	// printf("%i", req.heater == 1? 10 : 0);
+	printf("%i", req.cooler == 1? 10 : 0);
 	// printf("humi: %i ", req.hum);
 	// printf("dehu: %i ", req.dehum);
 	printf("\n");
@@ -64,7 +64,7 @@ OUT black_magic_box (black_magic_data req){
 }
 
 int main (){
-	freopen ("/Users/sugo/Google Drive/serra_mirko/v2/day_sim.txt", "r", stdin);
+	freopen ("/Users/sugo/Google Drive/serra_mirko/v2/day_sim1.txt", "r", stdin);
 
 	// create output configuration
 	// output1 is the one that will be applied

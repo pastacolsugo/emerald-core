@@ -11,10 +11,10 @@ int main (){
 						printf ("%d %d %d %d ", month, day, h, m);
 						printf("%d\n", t);
 					}
-					// for (int t=300; t>=0; t-=1){
-					// 	printf ("%d %d %d %d ", month, day, h, m);
-					// 	printf("%d\n", t);
-					// }
+					for (int t=300; t>=0; t-=1){
+						printf ("%d %d %d %d ", month, day, h, m);
+						printf("%d\n", t);
+					}
 					// for (int t=0; t<300; t+=1){
 					// 	printf ("%d %d %d %d ", month, day, h, m);
 					// 	printf("%d\n", t);

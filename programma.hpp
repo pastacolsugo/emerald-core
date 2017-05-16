@@ -1,4 +1,7 @@
+#define on true
+#define off false
 
+// IMPORTANTE: non mettere zeri inutili prima dei numeri. Se l'orario e' ore 08:00 mettere 8, 00. NON 08, 00.
 
  //  mmmm mmmmmmm   mm     mmm  mmmmm   mmmm  mm   m mmmmm 
  // #"   "   #      ##   m"   "   #    m"  "m #"m  #   #   
