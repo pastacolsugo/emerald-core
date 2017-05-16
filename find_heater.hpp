@@ -1,13 +1,15 @@
 
+// typedef unsigned short int usi;
+
 bool airSource (usi target, usi temp_in, usi temp_out){
 	// computing inside delta temperature
-	usi delta_in = target - temp_in;
+	short int delta_in = (int)target - (int)temp_in;
 
 	// taking the absolute value
 	delta_in = (delta_in > 0)? delta_in : -delta_in;
 
 	// computing outside delta temperature
-	usi delta_out = target - temp_out;
+	short int delta_out = (int)target - (int)temp_out;
 
 	// taking the absolute value
 	delta_out = (delta_out > 0)? delta_out : -delta_out;
@@ -28,6 +30,7 @@ bool airSource (usi target, usi temp_in, usi temp_out){
 	// setting the third output value as the air source
 	return air_from_inside;
 }
+
 
 bool_triple findHeater (TIME req, usi stag, usi temperatura_inside, 
 						usi temperatura_outside, bool_pair stato){
@@ -68,6 +71,5 @@ bool_triple findHeater (TIME req, usi stag, usi temperatura_inside,
 
 	return res;
 }
-
 
 

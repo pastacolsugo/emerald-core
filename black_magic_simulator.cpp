@@ -46,7 +46,8 @@ OUT black_magic_box (black_magic_data req){
 	bool_pair hum_state = makeBoolPair (req.output.hum, req.output.dehum);
 
 	// computing humidity management output
-	bool_pair hum_output = findHum (req.time, stagione_att, req.umidita, hum_state);
+	//bool_pair hum_output = findHum (req.time, stagione_att, req.umidita, hum_state);
+	bool_pair hum_output = makeBoolPair (false, false);
 	
 	// pack output data to be send back
 	OUT res = {
@@ -91,5 +92,7 @@ int main (){
 		//apply output1
 
 		output2 = output1;
+
+		index++;
 	}
 }
