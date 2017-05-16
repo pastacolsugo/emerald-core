@@ -80,7 +80,8 @@ bool_pair makeBoolPair (bool a, bool b){
 // se sono nell'ordine temporale corretto (t1 prima di t2) = 1
 // se sono lo stesso momento  (t1 == t2) = 0
 // se sono nell'ordine temporale inverso (t1 dopo t2) = -1
-short int compareTIME (TIME t1, TIME t2){		// 1 t1 before t2 / 0 t1==t2 / -1 t1 after t2
+short int compareTIME (TIME t1, TIME t2){		
+	// 1 t1 before t2 / 0 t1==t2 / -1 t1 after t2
 	if (t1.mese < t2.mese){				
 		return 1;
 	}

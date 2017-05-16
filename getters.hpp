@@ -24,10 +24,11 @@ usi getTempOutside (){
 usi getHum (){
 	usi res = 0;
 	// printf("Inserisci l'umidita: ");
-	// scanf ("%hu", &res);
+	scanf ("%hu", &res);
 	return res;
 }
 
+// with old output
 black_magic_data packItUp (TIME tempo_attuale, usi temperatura_in,
 	usi temperatura_out, usi umidita, OUT old_output){
 
@@ -42,6 +43,7 @@ black_magic_data packItUp (TIME tempo_attuale, usi temperatura_in,
 	return res;
 }
 
+// without old output
 black_magic_data packItUp (TIME tempo_attuale, usi temperatura_in,
 	usi temperatura_out, usi umidita){
 
@@ -60,7 +62,8 @@ black_magic_data getData (){
 	TIME act_time = getTime();
 
 	// reading inside temperature
-	usi act_temp_inside = getTempInside();	
+	// usi act_temp_inside = getTempInside();
+	usi act_temp_inside = 0;
 
 	// reading outside temperature
 	// usi act_temp_outside = getTempOutside();
@@ -71,7 +74,8 @@ black_magic_data getData (){
 
 	// create a variable containing all the data needed
 	// time, sensor reading and last output configuration
-	black_magic_data response = packItUp(act_time, act_temp_inside, act_temp_outside, act_hum);
+	black_magic_data response = packItUp (act_time, act_temp_inside, 
+		act_temp_outside, act_hum);
 
 	return response;
 }

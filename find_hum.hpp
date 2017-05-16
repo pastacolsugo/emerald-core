@@ -4,12 +4,16 @@ bool_pair findHum (TIME req, usi stag, usi hum_sens, bool_pair stato){
 
 	unsigned int hum_zero = HUMIDITY[stag][nU-1].umidita;
 	for (int i=1; i<nU; i++){
-		TIME temp = {req.mese, req.giorno, HUMIDITY[stag][i].orario.ore, HUMIDITY[stag][i].orario.minuti};
+		usi ore = HUMIDITY[stag][i].orario.ore;
+		usi min = HUMIDITY[stag][i].orario.minuti;
+		TIME temp = { req.mese, req.giorno,	ore, min};
+
 		if (compareTIME(req, temp) == 1){
 			hum_zero = HUMIDITY[stag][i-1].umidita;
 			break;
 		}
 	}
+
 	bool_pair res;
 
 	HYS humReq = {stato.first, hum_sens, hum_zero-dU_inf, hum_dU_inf, hum_dU_sup};

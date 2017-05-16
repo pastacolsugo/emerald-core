@@ -13,16 +13,17 @@ usi index = 0;
 
 void printout (OUT req, black_magic_data t){
 	// printf("luci: %d\the: %d\tcool: %d\thum: %d\tdehum: %d\n", req.luci, req.heater, req.cooler, req.hum, req.dehum);
-	// printf("%i) %i %i - %i:%i\t", index++, t.time.giorno, t.time.mese, t.time.ore, t.time.minuti);
-	printf("%i\t", t.temperatura_inside);
+	// printf("%i) %i %i - %i:%i\t", index, t.time.giorno, t.time.mese, t.time.ore, t.time.minuti);
+	// printf("%i\t", t.temperatura_inside);
+	printf("%i\t", t.umidita);
 	// printf("luci: %i ", req.luci);
 	// printf("crep: %i ", req.crepuscolo);
 	// printf("heat: %i ", req.heater);
 	// printf("cool: %i ", req.cooler);
 	// printf("%i", req.heater == 1? 10 : 0);
-	printf("%i", req.cooler == 1? 10 : 0);
-	// printf("humi: %i ", req.hum);
-	// printf("dehu: %i ", req.dehum);
+	// printf("%i", req.cooler == 1? 10 : 0);
+	// printf("%i ", req.hum == 1? 10 : 0);
+	// printf("%i", req.dehum == 1? 10 : 0);
 	printf("\n");
 
 }
@@ -37,17 +38,19 @@ OUT black_magic_box (black_magic_data req){
 	bool crepuscolo_output = findCrepuscolo (req.time, stagione_att);
 	
 	// create state variable for temperature managing group
-	bool_pair heat_group_state = makeBoolPair (req.output.heater, req.output.cooler);
+	bool_pair heat_state = makeBoolPair (req.output.heater, req.output.cooler);
 
 	// computing temperature management output
-	bool_triple heater_output = findHeater (req.time, stagione_att, req.temperatura_inside, req.temperatura_outside, heat_group_state);
+	bool_triple heater_output = findHeater (req.time, stagione_att, 
+		req.temperatura_inside, req.temperatura_outside, heat_state);
 	
 	// create state variable for humidity managing group
 	bool_pair hum_state = makeBoolPair (req.output.hum, req.output.dehum);
 
 	// computing humidity management output
-	//bool_pair hum_output = findHum (req.time, stagione_att, req.umidita, hum_state);
-	bool_pair hum_output = makeBoolPair (false, false);
+	bool_pair hum_output = findHum (req.time, stagione_att,
+		req.umidita, hum_state);
+	// bool_pair hum_output = makeBoolPair (false, false);
 	
 	// pack output data to be send back
 	OUT res = {
@@ -64,7 +67,7 @@ OUT black_magic_box (black_magic_data req){
 }
 
 int main (){
-	freopen ("/Users/sugo/Google Drive/serra_mirko/v2/day_sim1.txt", "r", stdin);
+	freopen ("/Users/sugo/Google Drive/serra_mirko/v2/day_sim2.txt", "r", stdin);
 
 	// create output configuration
 	// output1 is the one that will be applied

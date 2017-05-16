@@ -1,7 +1,8 @@
 #define on true
 #define off false
 
-// IMPORTANTE: non mettere zeri inutili prima dei numeri. Se l'orario e' ore 08:00 mettere 8, 00. NON 08, 00.
+// IMPORTANTE: non mettere zeri inutili prima dei numeri. 
+// Se l'orario e' ore 08:00 mettere 8, 00. NON 08, 00.
 
  //  mmmm mmmmmmm   mm     mmm  mmmmm   mmmm  mm   m mmmmm 
  // #"   "   #      ##   m"   "   #    m"  "m #"m  #   #   
@@ -73,11 +74,11 @@ const HML CREPUSCOLO[][nCrep] = {
 };
 
  
-// mmmmmmm mmmmmm m    m mmmmm  mmmmmm mmmmm    mm  mmmmmmm m    m mmmmm    mm  
-//    #    #      ##  ## #   "# #      #   "#   ##     #    #    # #   "#   ##  
-//    #    #mmmmm # ## # #mmm#" #mmmmm #mmmm"  #  #    #    #    # #mmmm"  #  # 
-//    #    #      # "" # #      #      #   "m  #mm#    #    #    # #   "m  #mm# 
-//    #    #mmmmm #    # #      #mmmmm #    " #    #   #    "mmmm" #    " #    #
+// mmmmm mmmmm m    m mmmmm  mmmmmm mmmmm    mm  mmmmm m    m mmmmm    mm  
+//   #   #     ##  ## #   "# #      #   "#   ##    #   #    # #   "#   ##  
+//   #   #mmmm # ## # #mmm#" #mmmmm #mmmm"  #  #   #   #    # #mmmm"  #  # 
+//   #   #     # "" # #      #      #   "m  #mm#   #   #    # #   "m  #mm# 
+//   #   #mmmm #    # #      #mmmmm #    " #    #  #   "mmmm" #    " #    #
 
 
 // indicata in decimi di grado celsius
