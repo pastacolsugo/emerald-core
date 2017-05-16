@@ -33,20 +33,20 @@ OUT black_magic_box (black_magic_data req){
 	// printf ("stagione = %d\n", stagione_att);
 
 	// compute light status
-	bool luci_output = findLuci(req.time, stagione_att);
-	bool crepuscolo_output = findCrepuscolo(req.time, stagione_att);
+	bool luci_output = findLuci (req.time, stagione_att);
+	bool crepuscolo_output = findCrepuscolo (req.time, stagione_att);
 	
 	// create state variable for temperature managing group
 	bool_pair heat_group_state = makeBoolPair (req.output.heater, req.output.cooler);
 
 	// computing temperature management output
-	bool_triple heater_output = findHeater(req.time, stagione_att, req.temperatura_inside, req.temperatura_outside, heat_group_state);
+	bool_triple heater_output = findHeater (req.time, stagione_att, req.temperatura_inside, req.temperatura_outside, heat_group_state);
 	
 	// create state variable for humidity managing group
 	bool_pair hum_state = makeBoolPair (req.output.hum, req.output.dehum);
 
 	// computing humidity management output
-	bool_pair hum_output = findHum(req.time, stagione_att, req.umidita, hum_state);
+	bool_pair hum_output = findHum (req.time, stagione_att, req.umidita, hum_state);
 	
 	// pack output data to be send back
 	OUT res = {
