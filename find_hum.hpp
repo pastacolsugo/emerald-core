@@ -16,10 +16,14 @@ bool_pair findHum (TIME req, usi stag, usi hum_sens, bool_pair stato){
 
 	bool_pair res;
 
-	HYS humReq = {stato.first, hum_sens, hum_zero-dU_inf, hum_dU_inf, hum_dU_sup};
+	HYS humReq = {
+		stato.first, hum_sens, hum_zero-dU_inf, hum_dU_inf, hum_dU_sup
+	};
 	res.first = reverse_hysteresis (humReq);
 
-	HYS dehumReq = {stato.second, hum_sens, hum_zero+dU_sup, hum_dU_inf, hum_dU_sup};
+	HYS dehumReq = {
+		stato.second, hum_sens, hum_zero+dU_sup, hum_dU_inf, hum_dU_sup
+	};
 	res.second = hysteresis (dehumReq);
 
 	if (res.first == true && res.second == true){

@@ -12,16 +12,18 @@ using namespace std;
 usi index = 0;
 
 void printout (OUT req, black_magic_data t){
-	// printf("luci: %d\the: %d\tcool: %d\thum: %d\tdehum: %d\n", req.luci, req.heater, req.cooler, req.hum, req.dehum);
-	// printf("%i) %i %i - %i:%i\t", index, t.time.giorno, t.time.mese, t.time.ore, t.time.minuti);
+	// printf("luci: %d\the: %d\tcool: %d\thum: %d\tdehum: %d\n", 
+	// 	req.luci, req.heater, req.cooler, req.hum, req.dehum);
+	// printf("%i) %i %i - %i:%i\t", 
+	// 	index, t.time.giorno, t.time.mese, t.time.ore, t.time.minuti);
 	// printf("%i\t", t.temperatura_inside);
-	printf("%i\t", t.umidita);
+	// printf("%i\t", t.umidita);
 	// printf("luci: %i ", req.luci);
 	// printf("crep: %i ", req.crepuscolo);
 	// printf("heat: %i ", req.heater);
 	// printf("cool: %i ", req.cooler);
-	// printf("%i", req.heater == 1? 10 : 0);
-	// printf("%i", req.cooler == 1? 10 : 0);
+	// printf("%i ", req.heater == 1? 10 : 0);
+	// printf("%i ", req.cooler == 1? 10 : 0);
 	// printf("%i ", req.hum == 1? 10 : 0);
 	// printf("%i", req.dehum == 1? 10 : 0);
 	printf("\n");
@@ -67,7 +69,8 @@ OUT black_magic_box (black_magic_data req){
 }
 
 int main (){
-	freopen ("/Users/sugo/Google Drive/serra_mirko/v2/day_sim2.txt", "r", stdin);
+	char file_path[] = "/Users/sugo/Google Drive/serra_mirko/v2/day_sim2.txt";
+	freopen (file_path, "r", stdin);
 
 	// create output configuration
 	// output1 is the one that will be applied
