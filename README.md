@@ -17,5 +17,5 @@ It relies much on custom data structs.
 Tried to reduce memory usage by wisely choose data types, 
 
 Contact me for any info
-ugobaroncini+minihappiness@gmail.com
+ugobaroncini+minihapp@gmail.com
 
