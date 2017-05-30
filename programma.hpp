@@ -156,3 +156,34 @@ const HMU HUMIDITY[][nU] = { //mancano le stagioni!
 };
 
 
+                                   
+ //   mm     mmm   mmmm  m    m   mm  
+ //   ##   m"   " m"  "m #    #   ##  
+ //  #  #  #      #    # #    #  #  # 
+ //  #mm#  #      #    # #    #  #mm# 
+ // #    #  "mmm"  #mm#" "mmmm" #    #
+ //                   #               
+
+const unsigned short int nW = 3;		//numero 
+
+const HMW WATER[][nQ] = {		//mancano le stagioni!
+	{
+		{ { 0,  0}, 	off},
+		{ { 8,  0}, 	on },
+		{ {19,  0}, 	off}
+	}, 
+	{
+		{ { 0,  0}, 	off},
+		{ { 8,  0}, 	on },
+		{ {19,  0}, 	off}
+	}, 
+	{
+		{ { 0,  0}, 	off},
+		{ { 8,  0}, 	on },
+		{ {19,  0}, 	off}
+	}	
+};
+
+
+
+

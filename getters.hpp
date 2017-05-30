@@ -62,12 +62,12 @@ black_magic_data getData (){
 	TIME act_time = getTime();
 
 	// reading inside temperature
-	// usi act_temp_inside = getTempInside();
-	usi act_temp_inside = 0;
+	usi act_temp_inside = getTempInside();
+	// usi act_temp_inside = 0;
 
 	// reading outside temperature
-	// usi act_temp_outside = getTempOutside();
-	usi act_temp_outside = 0;
+	usi act_temp_outside = getTempOutside();
+	// usi act_temp_outside = 0;
 
 	// reading inside humidity
 	usi act_hum = getHum();

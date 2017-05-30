@@ -1,6 +1,6 @@
 
 typedef unsigned short int usi;
-
+typedef HMW HML; 
 
 struct HM { //ore minuti
 	unsigned short int ore;
@@ -38,6 +38,7 @@ struct TIME {
 struct OUT {
 	bool luci;
 	bool crepuscolo;
+	bool water;
 	bool heater;
 	bool cooler;
 	bool air_source;

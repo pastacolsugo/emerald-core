@@ -20,6 +20,7 @@ void printout (OUT req, black_magic_data t){
 	// printf("%i\t", t.umidita);
 	// printf("luci: %i ", req.luci);
 	// printf("crep: %i ", req.crepuscolo);
+	// printf("water: %i ", req.water);
 	// printf("heat: %i ", req.heater);
 	// printf("cool: %i ", req.cooler);
 	// printf("%i ", req.heater == 1? 10 : 0);
@@ -36,8 +37,9 @@ OUT black_magic_box (black_magic_data req){
 	// printf ("stagione = %d\n", stagione_att);
 
 	// compute light status
-	bool luci_output = findLuci (req.time, stagione_att);
-	bool crepuscolo_output = findCrepuscolo (req.time, stagione_att);
+	bool luci_output 		= findLuci 	(req.time, stagione_att);
+	bool crepuscolo_output 	= findCrepuscolo (req.time, stagione_att);
+	bool water_output		= findWater (req.time, stagione_att);
 	
 	// create state variable for temperature managing group
 	bool_pair heat_state = makeBoolPair (req.output.heater, req.output.cooler);
@@ -58,6 +60,7 @@ OUT black_magic_box (black_magic_data req){
 	OUT res = {
 		luci_output, 
 		crepuscolo_output, 
+		water_output,
 		heater_output.first, // heater
 		heater_output.second, // cooler 
 		heater_output.third, // air source
