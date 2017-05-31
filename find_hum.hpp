@@ -27,8 +27,10 @@ bool_pair findHum (TIME req, usi stag, usi hum_sens, bool_pair stato){
 	res.second = hysteresis (dehumReq);
 
 	if (res.first == true && res.second == true){
-		printf("%i/%i - %i:%i :: ERROR :: findHum reported double true output\n", req.giorno, req.mese, req.ore, req.minuti);
-		printf("\tseason: %i + hum: %i + state: %i %i\n", stag, hum_sens, stato.first, stato.second);
+		printf("%i/%i - %i:%i :: ERROR :: findHum reported double 
+			true output\n", req.giorno, req.mese, req.ore, req.minuti);
+		printf("\tseason: %i + hum: %i + state: %i %i\n", 
+			stag, hum_sens, stato.first, stato.second);
 		printf("System override, switching both off... ");
 		res.first = false;
 		res.second = false;

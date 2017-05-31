@@ -22,7 +22,7 @@ bool findLuci (TIME req, usi stag){
 			req.giorno, 
 			LUCI[stag][i].orario.ore, 
 			LUCI[stag][i].orario.minuti
-		};	//creo un TIME con mese e giorno odierni, ore e minuti del programma
+		}; //creo un TIME con mese, giorno odierni; ore e minuti del programma
 
 		//per poter fare il paragone delle date
 		if (compareTIME(req, temporary) == 1){		
