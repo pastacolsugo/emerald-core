@@ -166,7 +166,7 @@ const HMU HUMIDITY[][nU] = { //mancano le stagioni!
 
 const unsigned short int nW = 3;		//numero 
 
-const HMW WATER[][nQ] = {		//mancano le stagioni!
+const HMW WATER[][nW] = {		//mancano le stagioni!
 	{
 		{ { 0,  0}, 	off},
 		{ { 8,  0}, 	on },

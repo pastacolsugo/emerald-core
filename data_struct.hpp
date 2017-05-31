@@ -1,6 +1,5 @@
 
 typedef unsigned short int usi;
-typedef HMW HML; 
 
 struct HM { //ore minuti
 	unsigned short int ore;
@@ -17,6 +16,8 @@ struct HML { //ore minuti luce = HML
 	HM orario;
 	bool stato;
 };
+
+typedef HML HMW; 
 
 struct HMT { //ore minuti temperatura
 	HM orario;
