@@ -48,7 +48,7 @@ bool_triple findHeater (TIME req, usi stag, usi temperatura_inside,
 	res.second = hysteresis (cool_Req);
 
 	if (res.first == true && res.second == true){
-		char msg1[] = "%i/%i %i:%i :: findHeater reported double true output\n";
+		char msg1[] = "%i/%i %i:%i | findHeater reported double true output\n";
 		char msg2[] = "\tseason: %i + hum: %i + state: %i %i\n";
 
 		printf(msg1, req.giorno, req.mese, req.ore, req.minuti);
