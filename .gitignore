@@ -1,0 +1,17 @@
+.DS_Store
+black_magic_simulator
+black_magic_simulator.dSYM
+csv
+cycle
+data_struct
+programma
+test_hys
+test_programmah
+testairsource
+testairsource.cpp
+output.txt
+untitled
+testing/air_source/test_generator
+*.gcx
+*.csv
+hysteresis_control/

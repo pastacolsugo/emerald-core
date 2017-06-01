@@ -14,11 +14,7 @@ int main (){
 
 	while (true) {
 		fscanf (in, "%i %i %i", &target, &inside, &outside);
-
-		if (target == inside == outside == 0){
-			break;
-		}
-
+	
 		int d_in = target - inside;
 		int d_out = target - outside;
 		d_in = (d_in > 0)? d_in :  d_in;
@@ -27,5 +23,9 @@ int main (){
 		bool res = airSource(target, inside, outside);
 
 		printf("%i %i %i %i %i %i\n", target, inside, outside, d_in, d_out, res);
+
+		if (target == 400 && inside == 400 && outside == 400){
+			break;
+		}
 	}
 }
