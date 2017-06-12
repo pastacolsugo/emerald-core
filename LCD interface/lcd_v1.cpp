@@ -6,14 +6,14 @@ class liquid {
 public:
 	char visual[2][17];
 
-	int cursor_riga;
-	int cursor_colonna;
+	int cursor_row;
+	int cursor_column;
 
 	// constructor
 	// initialize empty matrix
 	liquid(){
-		cursor_colonna = 0;
-		cursor_riga = 0;
+		cursor_column = 0;
+		cursor_row = 0;
 		for (int i=0; i<2; i++){
 			for (int j=0; j<17; j++){
 				visual[i][j] = ' ';
@@ -24,6 +24,7 @@ public:
 	}
 
 	// empties the matrix
+	// (fills it with white spaces)
 	void clear(){
 		for (int i=0; i<2; i++){
 			for (int j=0; j<17; j++){
@@ -34,23 +35,23 @@ public:
 		}
 	}
 
-	// moves the cursor
-	void setCursor (int riga, int colonna){
-		cursor_riga = riga;
-		cursor_colonna = colonna;
+	// moves the cursor to position
+	void setCursor (int row, int column){
+		cursor_row = row;
+		cursor_column = column;
 	}
 
-	// prints a string to the matrix at the cursor location
+	// insert a string into the matrix at cursor location
 	void print(char* s){
-		for (int i=0; *s!=0 && cursor_colonna<16; i++, s++){
-			visual[cursor_riga][cursor_colonna] = *s;
-			cursor_colonna++;
+		for (int i=0; *s!=0 && cursor_column<16; i++, s++){
+			visual[cursor_row][cursor_column] = *s;
+			cursor_column++;
 		}
 	}
 
-	// prints a single character at cursor location
+	// insert a single character at cursor location
 	void print (char c){
-		visual[cursor_riga][cursor_colonna] = c;
+		visual[cursor_row][cursor_column] = c;
 	}
 
 	// prints out the matrix to the console
@@ -63,7 +64,7 @@ public:
 		}
 	}
 
-	// update the screen view with latest data
+	// update the screen view with latest view
 	void update (char* first, char* second){
 		setCursor (0, 0);
 		print (first);
@@ -73,65 +74,64 @@ public:
 	}
 };
 
-char* firstLine (char* first_line, TIME now){
+void firstLine (char* first_line, screen* data){
 
 	// insert day
-	if (now.giorno < 10){
+	if (data->time.day < 10){
 		first_line[0] = '0';
 	} else {
-		first_line[0] = ((now.giorno/10)%10) + '0';
+		first_line[0] = ((data->time.day/10)%10) + '0';
 	}
-	first_line[1] = (now.giorno%10) + '0';
+	first_line[1] = (data->time.day%10) + '0';
 
 	// insert month
-	if (now.mese < 10){
+	if (data->time.month < 10){
 		first_line[3] = '0';
 	} else {
 		first_line[3] = '1';
 	}
-	first_line[4] = (now.mese%10) + '0';
+	first_line[4] = (data->time.month%10) + '0';
 
 	// insert year
 	// first_line[6] = ((now.anno/10)%10) + '0';
 	// first_line[7] = (now.anno%10) + '0';
 
 	// insert hours
-	if (now.ore < 10) {
+	if (data->time.hour < 10) {
 		first_line[11] = '0';
 	} else {
-		first_line[11] = ((now.ore/10)%10) + '0';
+		first_line[11] = ((data->time.hour/10)%10) + '0';
 	}
-	first_line[12] = (now.ore%10) + '0';
+	first_line[12] = (data->time.hour%10) + '0';
 
 	// insert minutes	
-	if (now.minuti < 10){
+	if (data->time.minute < 10){
 		first_line[14] = '0';
 	} else {
-		first_line[14] = ((now.minuti/10)%10) + '0';
+		first_line[14] = ((data->time.minute/10)%10) + '0';
 	}
-	first_line[15] = (now.minuti%10) + '0';
+	first_line[15] = (data->time.minute%10) + '0';
 
-	return first_line;
 }
 
-void secondLine (char* second_line, OUT out, usi stag, usi temperature){
+void secondLine (char* second_line, screen* data){
 
-	second_line[2] = ((temperature/100)%10) + '0';
-	second_line[3] = ((temperature/10)%10) + '0';
+	second_line[2] = ((data->temperature/100)%10) + '0';
+	second_line[3] = ((data->temperature/10)%10) + '0';
 
-	if (out.water){
+	if (data->out.water){
 		second_line[7] = '1';
 	} else {
 		second_line[7] = '0';
 	}
 
-	if (out.luci){
+	if (data->out.light){
 		second_line[11] = '1';
 	} else {
 		second_line[11] = '0';
 	}
 
-	second_line[15] = stag + '0';
+	second_line[15] = data->stag + '0';
 
 }
 
@@ -139,9 +139,9 @@ void showTime (screen data, liquid* lcd_p){
 	char first_line[17] = "gg/mm/aa   hh:mm";
 	char second_line[] = "T:__ W:_ L:_ S:_";
 
-	firstLine (first_line, data.time);
+	firstLine (first_line, &data);
 
-	secondLine (second_line, data.out, data.stag, data.temperature);
+	secondLine (second_line, &data);
 
 	lcd_p -> update (first_line, second_line);
 }

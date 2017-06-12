@@ -1,44 +1,44 @@
 
 typedef unsigned short int usi;
 
-struct HM { //ore minuti
-	unsigned short int ore;
-	unsigned short int minuti;
+struct HM { //hour minute
+	unsigned short int hour;
+	unsigned short int minute;
 };
 
-struct GMS { //giorno mese stagione = GMS
-	unsigned short int mese;
-	unsigned short int giorno;
-	unsigned short int stagione;
+struct DMS { //day month season = DMS
+	unsigned short int month;
+	unsigned short int day;
+	unsigned short int season;
 };
 
-struct HML { //ore minuti luce = HML
-	HM orario;
-	bool stato;
+struct HML { //hour minute light = HML
+	HM time;
+	bool state;
 };
 
-typedef HML HMW; // ore minuti acqua
+typedef HML HMW; // hour minute water
 
-struct HMT { //ore minuti temperatura
-	HM orario;
-	unsigned int temperatura;
+struct HMT { //hour minute temperature
+	HM time;
+	unsigned short int temperature;
 };
 
-struct HMU { //ore minuti umidita
-	HM orario;
-	unsigned short int umidita;
+struct HMH { //hour minute humidity
+	HM time;
+	unsigned short int humidity;
 };
 
 struct TIME {
-	usi mese;
-	usi giorno;
-	usi ore;
-	usi minuti;
+	usi month;
+	usi day;
+	usi hour;
+	usi minute;
 };
 
 struct OUT {
-	bool luci;
-	bool crepuscolo;
+	bool light;
+	bool light2;
 	bool water;
 	bool heater;
 	bool cooler;
@@ -49,14 +49,14 @@ struct OUT {
 
 struct black_magic_data {
 	TIME time;
-	usi temperatura_inside;
-	usi temperatura_outside;
-	usi umidita;
+	usi temperature_inside;
+	usi temperature_outside;
+	usi humidity;
 	OUT output;
 };
 
 struct HYS {
-	bool stato;
+	bool state;
 	int value;
 	int zero;
 	int d_inf;
@@ -86,36 +86,35 @@ bool_pair makeBoolPair (bool a, bool b){
 	return res;
 }
 
-// se sono nell'ordine temporale corretto (t1 prima di t2) = 1
-// se sono lo stesso momento  (t1 == t2) = 0
-// se sono nell'ordine temporale inverso (t1 dopo t2) = -1
-short int compareTIME (TIME t1, TIME t2){		
-	// 1 t1 before t2 / 0 t1==t2 / -1 t1 after t2
-	if (t1.mese < t2.mese){				
+// if they are in correct order timewise (t1 then t2) = 1
+// if they are the same istant (t1 == t2) = 0
+// if they are in reverse order timewise (t2 then t1) = -1
+short int compareTIME (TIME* t1, TIME* t2){		
+	if (t1->month < t2->month){				
 		return 1;
 	}
-	if (t1.mese > t2.mese){
+	if (t1->month > t2->month){
 		return -1;
 	}
 
-	if (t1.giorno < t2.giorno){
+	if (t1->day < t2->day){
 		return 1;
 	}	
-	if (t1.giorno > t2.giorno){
+	if (t1->day > t2->day){
 		return -1;
 	}
 
-	if (t1.ore < t2.ore){
+	if (t1->hour < t2->hour){
 		return 1;
 	}
-	if (t1.ore > t2.ore){
+	if (t1->hour > t2->hour){
 		return -1;
 	}
 
-	if (t1.minuti < t2.minuti){
+	if (t1->minute < t2->minute){
 		return 1;
 	}
-	if (t1.minuti > t2.minuti){
+	if (t1->minute > t2->minute){
 		return -1;
 	}
 	return 0;

@@ -1,72 +1,72 @@
 
-usi findStagione (TIME req){
+usi findSeason (TIME* req){
 	usi res = nS-1;
 	
 	for (usi i=1; i<nS; i++){
-		TIME temporary = { STAGIONI[i].mese, STAGIONI[i].giorno, 0, 0};
+		TIME temporary = { SEASONS[i].month, SEASONS[i].day, 0, 0};
 		
-		if (compareTIME(req, temporary) == 1){
-			res = STAGIONI[i-1].stagione;
+		if (compareTIME(req, &temporary) == 1){
+			res = SEASONS[i-1].season;
 			break;
 		}
 	}
 	return res;
 }
 
-bool findLuci (TIME req, usi stag){
-	bool res = LUCI[stag][nL-1].stato;
+bool findLight (TIME* req, usi* stag){
+	bool res = LIGHT [*stag][nL-1].state;
 	
 	for (int i=1; i<nL; i++){
 		TIME temporary = {
-			req.mese, 
-			req.giorno, 
-			LUCI[stag][i].orario.ore, 
-			LUCI[stag][i].orario.minuti
-		}; //creo un TIME con mese, giorno odierni; ore e minuti del programma
+			req->month, 
+			req->day, 
+			LIGHT[*stag][i].time.hour, 
+			LIGHT[*stag][i].time.minute
+		}; //creo un TIME con month, day odierni; hour e minute del programma
 
 		//per poter fare il paragone delle date
-		if (compareTIME(req, temporary) == 1){		
-			res = LUCI[stag][i-1].stato;
+		if (compareTIME(req, &temporary) == 1){		
+			res = LIGHT[*stag][i-1].state;
 			break;
 		}
 	}
 	return res;
 }
 
-bool findCrepuscolo (TIME req, usi stag){
-	bool res = CREPUSCOLO[stag][nCrep-1].stato;
+bool findLight2 (TIME* req, usi* stag){
+	bool res = LIGHT_2[*stag][nCrep-1].state;
 	
 	for (int i=1; i<nCrep; i++){
 		TIME temporary = {
-			req.mese, 
-			req.giorno, 
-			CREPUSCOLO[stag][i].orario.ore,
-			CREPUSCOLO[stag][i].orario.minuti
+			req->month, 
+			req->day, 
+			LIGHT_2[*stag][i].time.hour,
+			LIGHT_2[*stag][i].time.minute
 			};	
-		//creo un TIME con mese e giorno odierni, ore e minuti del programma
+		//creo un TIME con month e day odierni, hour e minute del programma
 		
 		//per poter fare il paragone delle date
-		if (compareTIME(req, temporary) == 1){		
-			res = CREPUSCOLO[stag][i-1].stato;
+		if (compareTIME(req, &temporary) == 1){		
+			res = LIGHT_2[*stag][i-1].state;
 			break;
 		}
 	}
 	return res;
 }
 
-bool findWater (TIME req, usi stag){
-	bool res = WATER[stag][nW-1].stato;
+bool findWater (TIME* req, usi* stag){
+	bool res = WATER[*stag][nW-1].state;
 
 	for (int i=1; i<nW; i++){
 		TIME temporary = {
-			req.mese, 
-			req.giorno, 
-			WATER[stag][i].orario.ore, 
-			WATER[stag][i].orario.minuti
+			req->month, 
+			req->day, 
+			WATER[*stag][i].time.hour, 
+			WATER[*stag][i].time.minute
 		};
 
-		if (compareTIME(req, temporary) == 1){
-			res = WATER[stag][i-1].stato;
+		if (compareTIME(req, &temporary) == 1){
+			res = WATER[*stag][i-1].state;
 			break;
 		}
 	}

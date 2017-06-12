@@ -2,7 +2,7 @@
 TIME getTime (){
 	TIME res;
 	// printf ("Inserisci:MM\tGG\thh\tmm\n");
- 	scanf ("%hu %hu %hu %hu", &res.mese, &res.giorno, &res.ore, &res.minuti);
+ 	scanf ("%hu %hu %hu %hu", &res.month, &res.day, &res.hour, &res.minute);
 	return res;
 }
 
@@ -28,54 +28,53 @@ usi getHum (){
 	return res;
 }
 
+// DEPRECATED
 // with old output
-black_magic_data packItUp (TIME tempo_attuale, usi temperatura_in,
-	usi temperatura_out, usi umidita, OUT old_output){
+// black_magic_data packItUp (TIME tempo_attuale, usi temperatura_in,
+// 	usi temperatura_out, usi umidita, OUT old_output){
 
-	black_magic_data res = {
-		tempo_attuale, 
-		temperatura_in, 
-		temperatura_out, 
-		umidita, 
-		old_output
-	};
+// 	black_magic_data res = {
+// 		tempo_attuale, 
+// 		temperatura_in, 
+// 		temperatura_out, 
+// 		umidita, 
+// 		old_output
+// 	};
 
-	return res;
-}
+// 	return res;
+// }
 
-// without old output
-black_magic_data packItUp (TIME tempo_attuale, usi temperatura_in,
-	usi temperatura_out, usi umidita){
+void packItUp (TIME* time_now, usi* temperature_in,
+	usi* temperature_out, usi* hum, black_magic_data* res){
 
-	black_magic_data res = {
-		tempo_attuale, 
-		temperatura_in, 
-		temperatura_out, 
-		umidita
-	};
+	res->time = *time_now;
+	res->temperature_inside =  *temperature_in;
+	res->temperature_outside = *temperature_out;
+	res->humidity = *hum;	
 
-	return res;
 }
 
 black_magic_data getData (){
+	black_magic_data response;
+
 	// reading time from the RTC
-	TIME act_time = getTime();
+	TIME current_time = getTime();
 
 	// reading inside temperature
-	usi act_temp_inside = getTempInside();
+	usi current_temp_inside = getTempInside();
 	// usi act_temp_inside = 0;
 
 	// reading outside temperature
-	usi act_temp_outside = getTempOutside();
+	usi current_temp_outside = getTempOutside();
 	// usi act_temp_outside = 0;
 
 	// reading inside humidity
-	usi act_hum = getHum();
+	usi current_hum = getHum();
 
 	// create a variable containing all the data needed
 	// time, sensor reading and last output configuration
-	black_magic_data response = packItUp (act_time, act_temp_inside, 
-		act_temp_outside, act_hum);
+	packItUp (&current_time, &current_temp_inside, &current_temp_outside,
+		&current_hum, &response);
 
 	return response;
 }

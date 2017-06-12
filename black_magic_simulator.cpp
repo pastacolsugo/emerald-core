@@ -12,14 +12,14 @@ using namespace std;
 usi index = 0;
 
 void printout (OUT req, black_magic_data t){
-	// printf("luci: %d\the: %d\tcool: %d\thum: %d\tdehum: %d\n", 
-	// 	req.luci, req.heater, req.cooler, req.hum, req.dehum);
+	// printf("light: %d\the: %d\tcool: %d\thum: %d\tdehum: %d\n", 
+	// 	req.light, req.heater, req.cooler, req.hum, req.dehum);
 	// printf("%i) %i %i - %i:%i\t", 
-	// 	index, t.time.giorno, t.time.mese, t.time.ore, t.time.minuti);
-	// printf("%i\t", t.temperatura_inside);
-	// printf("%i\t", t.umidita);
-	// printf("luci: %i ", req.luci);
-	// printf("crep: %i ", req.crepuscolo);
+	// 	index, t.time.day, t.time.month, t.time.hour, t.time.minute);
+	// printf("%i\t", t.temperature_inside);
+	// printf("%i\t", t.humidity);
+	// printf("light: %i ", req.light);
+	// printf("crep: %i ", req.light2);
 	// printf("water: %i ", req.water);
 	// printf("heat: %i ", req.heater);
 	// printf("cool: %i ", req.cooler);
@@ -27,39 +27,39 @@ void printout (OUT req, black_magic_data t){
 	// printf("%i ", req.cooler == 1? 10 : 0);
 	// printf("%i ", req.hum == 1? 10 : 0);
 	// printf("%i", req.dehum == 1? 10 : 0);
-	printf("\n");
+	// printf("\n");
 
 }
 
 OUT black_magic_box (black_magic_data req){
-	// find actual season
-	usi stagione_att = findStagione (req.time);
-	// printf ("stagione = %d\n", stagione_att);
+	// find current season
+	usi current_season = findSeason (&req.time);
+	// printf ("stagione = %d\n", current_season);
 
 	// compute light status
-	bool luci_output 		= findLuci 	(req.time, stagione_att);
-	bool crepuscolo_output 	= findCrepuscolo (req.time, stagione_att);
-	bool water_output		= findWater (req.time, stagione_att);
+	bool light_output 		= findLight (&req.time, &current_season);
+	bool light_2_output 	= findLight2 (&req.time, &current_season);
+	bool water_output		= findWater (&req.time, &current_season);
 	
 	// create state variable for temperature managing group
 	bool_pair heat_state = makeBoolPair (req.output.heater, req.output.cooler);
 
 	// computing temperature management output
-	bool_triple heater_output = findHeater (req.time, stagione_att, 
-		req.temperatura_inside, req.temperatura_outside, heat_state);
+	bool_triple heater_output = findHeater (req.time, current_season, 
+		req.temperature_inside, req.temperature_outside, heat_state);
 	
 	// create state variable for humidity managing group
 	bool_pair hum_state = makeBoolPair (req.output.hum, req.output.dehum);
 
 	// computing humidity management output
-	bool_pair hum_output = findHum (req.time, stagione_att,
-		req.umidita, hum_state);
+	bool_pair hum_output = findHum (req.time, current_season,
+		req.humidity, hum_state);
 	// bool_pair hum_output = makeBoolPair (false, false);
 	
 	// pack output data to be sent back
 	OUT res = {
-		luci_output, 
-		crepuscolo_output, 
+		light_output, 
+		light_2_output, 
 		water_output,
 		heater_output.first, // heater
 		heater_output.second, // cooler 
@@ -87,7 +87,7 @@ int main (){
 
 		input.output = output2;
 		
-		if (input.time.mese == 0){
+		if (input.time.month == 0){
 			return 0;
 		}
 		
@@ -95,7 +95,7 @@ int main (){
 		// taking the actual state as input
 		output1 = black_magic_box (input);
 
-		// printf("%i\t%hu\t\t", input.output.heater, input.temperatura);
+		// printf("%i\t%hu\t\t", input.output.heater, input.temperature);
 		printout (output1, input);
 
 		//apply output1

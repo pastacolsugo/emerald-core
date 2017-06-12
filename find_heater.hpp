@@ -9,23 +9,23 @@ bool_triple findHeater (TIME req, usi stag, usi temperatura_inside,
 	bool_triple res = {false, false, false};
 
 	// find the temperature to be mantained
-	unsigned int t_zero = TEMPERATURA[stag][nT-1].temperatura;
+	unsigned int t_zero = TEMPERATURE[stag][nT-1].temperature;
 	
 	for (int i=1; i<nT; i++){
 		TIME temp = {
-			req.mese, 
-			req.giorno, 
-			TEMPERATURA[stag][i].orario.ore, 
-			TEMPERATURA[stag][i].orario.minuti
+			req.month, 
+			req.day, 
+			TEMPERATURE[stag][i].time.hour, 
+			TEMPERATURE[stag][i].time.minute
 		};
 
-		if (compareTIME(req, temp) == 1){
-			t_zero = TEMPERATURA[stag][i-1].temperatura;
+		if (compareTIME(&req, &temp) == 1){
+			t_zero = TEMPERATURE[stag][i-1].temperature;
 			break;
 		}
 	}
 	
-	res.third = airSource(t_zero, temperatura_inside, temperatura_outside);	
+	res.third = airSource(&t_zero, &temperatura_inside, &temperatura_outside);	
 
 	usi temp_best = (res.third)? temperatura_inside : temperatura_outside;
 
@@ -36,7 +36,7 @@ bool_triple findHeater (TIME req, usi stag, usi temperatura_inside,
 		heat_dT_inf, 
 		heat_dT_sup
 	};	
-	res.first = reverse_hysteresis (heat_Req);
+	res.first = reverse_hysteresis (&heat_Req);
 
 	HYS cool_Req = {
 		stato.second, 
@@ -45,15 +45,15 @@ bool_triple findHeater (TIME req, usi stag, usi temperatura_inside,
 		cool_dT_inf, 
 		cool_dT_sup
 	};
-	res.second = hysteresis (cool_Req);
+	res.second = hysteresis (&cool_Req);
 
 	if (res.first == true && res.second == true){
 		char msg1[] = "%i/%i %i:%i | findHeater reported double true output\n";
 		char msg2[] = "\tseason: %i + hum: %i + state: %i %i\n";
 
-		printf(msg1, req.giorno, req.mese, req.ore, req.minuti);
+		printf(msg1, req.day, req.month, req.hour, req.minute);
 		printf(msg2, stag, temp_best, stato.first, stato.second);
-		printf("System override, switching both off... ");
+		printf("Override, switching both off... ");
 		res.first = false;
 		res.second = false;
 		printf("done.\n");
