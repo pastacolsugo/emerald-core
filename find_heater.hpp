@@ -9,7 +9,7 @@ bool_triple findHeater (TIME req, usi stag, usi temperatura_inside,
 	bool_triple res = {false, false, false};
 
 	// find the temperature to be mantained
-	unsigned int t_zero = TEMPERATURE[stag][nT-1].temperature;
+	unsigned short int t_zero = TEMPERATURE[stag][nT-1].temperature;
 	
 	for (int i=1; i<nT; i++){
 		TIME temp = {

@@ -14,12 +14,12 @@ usi index = 0;
 void printout (OUT req, black_magic_data t){
 	// printf("light: %d\the: %d\tcool: %d\thum: %d\tdehum: %d\n", 
 	// 	req.light, req.heater, req.cooler, req.hum, req.dehum);
-	// printf("%i) %i %i - %i:%i\t", 
-	// 	index, t.time.day, t.time.month, t.time.hour, t.time.minute);
+	printf("%i) %i %i - %i:%i\t", 
+		index, t.time.day, t.time.month, t.time.hour, t.time.minute);
 	// printf("%i\t", t.temperature_inside);
 	// printf("%i\t", t.humidity);
-	// printf("light: %i ", req.light);
-	// printf("crep: %i ", req.light2);
+	printf("light: %i ", req.light);
+	printf("light2: %i ", req.light2);
 	// printf("water: %i ", req.water);
 	// printf("heat: %i ", req.heater);
 	// printf("cool: %i ", req.cooler);
@@ -27,13 +27,14 @@ void printout (OUT req, black_magic_data t){
 	// printf("%i ", req.cooler == 1? 10 : 0);
 	// printf("%i ", req.hum == 1? 10 : 0);
 	// printf("%i", req.dehum == 1? 10 : 0);
-	// printf("\n");
+	printf("\n");
 
 }
 
-OUT black_magic_box (black_magic_data req){
+OUT black_magic_box (black_magic_data req, usi* seas){
 	// find current season
 	usi current_season = findSeason (&req.time);
+	*seas = current_season;
 	// printf ("stagione = %d\n", current_season);
 
 	// compute light status
@@ -72,13 +73,14 @@ OUT black_magic_box (black_magic_data req){
 }
 
 int main (){
-	char file_path[] = "/Users/sugo/Google Drive/serra_mirko/v2/day_sim2.txt";
+	char file_path[] = "/Users/sugo/Google Drive/serra_mirko/v2/day_sim1.txt";
 	freopen (file_path, "r", stdin);
 
 	// create output configuration
 	// output1 is the one that will be applied
 	// output2 is the one that has last been applied
 	OUT output1, output2 = {0, 0, 0, 0, 0};
+	usi season = 0;
 
 	while (true){
 		black_magic_data input;
@@ -93,12 +95,20 @@ int main (){
 		
 		// black_magic_box is going to compute the next output configuration
 		// taking the actual state as input
-		output1 = black_magic_box (input);
+		output1 = black_magic_box (input, &season);
 
 		// printf("%i\t%hu\t\t", input.output.heater, input.temperature);
 		printout (output1, input);
 
 		//apply output1
+
+		// update screen
+		screen lcd_data = {
+			input.time,
+			output1,
+			0, //stagione
+
+		}
 
 		output2 = output1;
 

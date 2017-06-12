@@ -123,13 +123,14 @@ const HMT TEMPERATURE[][nT] = {		//mancano le stagioni!
 		{{ 22, 0},	170}
 	}
 };
-
- // m    m m    m mmmmm  mmmm   mmmmm mmmmmmm   mm  
- // #    # ##  ##   #    #   "m   #      #      ##  
- // #    # # ## #   #    #    #   #      #     #  # 
- // #    # # "" #   #    #    #   #      #     #mm# 
- // "mmmm" #    # mm#mm  #mmm"  mm#mm    #    #    #
-
+ 
+ // m    m                 "        #    "      m          
+ // #    # m   m  mmmmm  mmm     mmm#  mmm    mm#mm  m   m 
+ // #mmmm# #   #  # # #    #    #" "#    #      #    "m m" 
+ // #    # #   #  # # #    #    #   #    #      #     #m#  
+ // #    # "mm"#  # # #  mm#mm  "#m##  mm#mm    "mm   "#   
+ //                                                   m"   
+ //                                                  ""  
 
 const unsigned short int nU = 4;
 

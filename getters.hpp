@@ -18,13 +18,14 @@ usi getTempInside (){
 }
 
 usi getTempOutside (){
-	return getTemp();
+	// return getTemp();
+	return 0;
 }
 
 usi getHum (){
 	usi res = 0;
 	// printf("Inserisci l'umidita: ");
-	scanf ("%hu", &res);
+	// scanf ("%hu", &res);
 	return res;
 }
 
