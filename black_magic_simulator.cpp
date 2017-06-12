@@ -6,6 +6,7 @@
 #include "finder_1.hpp"
 #include "find_heater.hpp"
 #include "find_hum.hpp"
+#include "LCD Interface/lcd_v1.hpp"
 
 using namespace std;
 
@@ -14,12 +15,12 @@ usi index = 0;
 void printout (OUT req, black_magic_data t){
 	// printf("light: %d\the: %d\tcool: %d\thum: %d\tdehum: %d\n", 
 	// 	req.light, req.heater, req.cooler, req.hum, req.dehum);
-	printf("%i) %i %i - %i:%i\t", 
-		index, t.time.day, t.time.month, t.time.hour, t.time.minute);
+	// printf("%i) %i %i - %i:%i\t", 
+		// index, t.time.day, t.time.month, t.time.hour, t.time.minute);
 	// printf("%i\t", t.temperature_inside);
 	// printf("%i\t", t.humidity);
-	printf("light: %i ", req.light);
-	printf("light2: %i ", req.light2);
+	// printf("light: %i ", req.light);
+	// printf("light2: %i ", req.light2);
 	// printf("water: %i ", req.water);
 	// printf("heat: %i ", req.heater);
 	// printf("cool: %i ", req.cooler);
@@ -27,7 +28,7 @@ void printout (OUT req, black_magic_data t){
 	// printf("%i ", req.cooler == 1? 10 : 0);
 	// printf("%i ", req.hum == 1? 10 : 0);
 	// printf("%i", req.dehum == 1? 10 : 0);
-	printf("\n");
+	// printf("\n");
 
 }
 
@@ -73,8 +74,10 @@ OUT black_magic_box (black_magic_data req, usi* seas){
 }
 
 int main (){
-	char file_path[] = "/Users/sugo/Google Drive/serra_mirko/v2/day_sim1.txt";
-	freopen (file_path, "r", stdin);
+	// char file_path[] = "/Users/sugo/Google Drive/serra_mirko/v2/day_sim1.txt";
+	// freopen (file_path, "r", stdin);
+
+	liquid lcd;
 
 	// create output configuration
 	// output1 is the one that will be applied
@@ -106,9 +109,12 @@ int main (){
 		screen lcd_data = {
 			input.time,
 			output1,
-			0, //stagione
+			season, //stagione
+			input.temperature_inside
+		};
 
-		}
+		showTime (&lcd_data, &lcd);
+		lcd.show();
 
 		output2 = output1;
 
