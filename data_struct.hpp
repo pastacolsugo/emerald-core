@@ -17,7 +17,7 @@ struct HML { //ore minuti luce = HML
 	bool stato;
 };
 
-typedef HML HMW; 
+typedef HML HMW; // ore minuti acqua
 
 struct HMT { //ore minuti temperatura
 	HM orario;
@@ -61,6 +61,13 @@ struct HYS {
 	int zero;
 	int d_inf;
 	int d_sup;
+};
+
+struct screen {
+	TIME time;
+	OUT out;
+	usi stag;
+	usi temperature;
 };
 
 struct bool_pair {

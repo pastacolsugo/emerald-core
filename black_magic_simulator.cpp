@@ -56,7 +56,7 @@ OUT black_magic_box (black_magic_data req){
 		req.umidita, hum_state);
 	// bool_pair hum_output = makeBoolPair (false, false);
 	
-	// pack output data to be send back
+	// pack output data to be sent back
 	OUT res = {
 		luci_output, 
 		crepuscolo_output, 
