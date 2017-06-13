@@ -6,7 +6,7 @@
 #include "finder_1.hpp"
 #include "find_heater.hpp"
 #include "find_hum.hpp"
-#include "LCD Interface/lcd_v1.hpp"
+#include "LCD Interface/lcd.hpp"
 
 using namespace std;
 
