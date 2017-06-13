@@ -1,5 +1,5 @@
 // #include <cstdio>
-// #include "../data_struct.hpp"
+// #include "data_struct.hpp"
 
 class liquid {
 	// setCursor(row, col);

@@ -6,7 +6,7 @@
 #include "finder_1.hpp"
 #include "find_heater.hpp"
 #include "find_hum.hpp"
-#include "LCD Interface/lcd.hpp"
+#include "lcd.hpp"
 
 using namespace std;
 
@@ -39,9 +39,9 @@ OUT black_magic_box (black_magic_data req, usi* seas){
 	// printf ("stagione = %d\n", current_season);
 
 	// compute light status
-	bool light_output 		= findLight (&req.time, &current_season);
-	bool light_2_output 	= findLight2 (&req.time, &current_season);
-	bool water_output		= findWater (&req.time, &current_season);
+	bool light_output 	= findLight (&req.time, &current_season);
+	bool light_2_output = findLight2 (&req.time, &current_season);
+	bool water_output	= findWater (&req.time, &current_season);
 	
 	// create state variable for temperature managing group
 	bool_pair heat_state = makeBoolPair (req.output.heater, req.output.cooler);
@@ -54,9 +54,9 @@ OUT black_magic_box (black_magic_data req, usi* seas){
 	bool_pair hum_state = makeBoolPair (req.output.hum, req.output.dehum);
 
 	// computing humidity management output
-	bool_pair hum_output = findHum (req.time, current_season,
-		req.humidity, hum_state);
-	// bool_pair hum_output = makeBoolPair (false, false);
+	// bool_pair hum_output = findHum (req.time, current_season,
+	// 	req.humidity, hum_state);
+	bool_pair hum_output = 	makeBoolPair (false, false);
 	
 	// pack output data to be sent back
 	OUT res = {
