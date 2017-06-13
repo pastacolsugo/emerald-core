@@ -1,13 +1,8 @@
 #include "air_source.hpp"
 
-bool_triple findHeater (TIME req, usi stag, usi temperatura_inside, 
-						usi temperatura_outside, bool_pair stato){
-	// res.first	=	heater output value
-	// res.second	=	cooler output value
-	// res.third	=	air source [inside = true - outside = false]
+void findHeater (TIME req, usi stag, usi temperatura_inside, 
+						usi temperatura_outside, bool_pair stato, OUT* res){
 	
-	bool_triple res = {false, false, false};
-
 	// find the temperature to be mantained
 	unsigned short int t_zero = TEMPERATURE[stag][nT-1].temperature;
 	
@@ -25,9 +20,10 @@ bool_triple findHeater (TIME req, usi stag, usi temperatura_inside,
 		}
 	}
 	
-	res.third = airSource(&t_zero, &temperatura_inside, &temperatura_outside);	
+	res->air_source = airSource(&t_zero, &temperatura_inside, 
+		&temperatura_outside);	
 
-	usi temp_best = (res.third)? temperatura_inside : temperatura_outside;
+	usi temp_best =(res->air_source)? temperatura_inside : temperatura_outside;
 
 	HYS heat_Req = {
 		stato.first, 
@@ -36,7 +32,7 @@ bool_triple findHeater (TIME req, usi stag, usi temperatura_inside,
 		heat_dT_inf, 
 		heat_dT_sup
 	};	
-	res.first = reverse_hysteresis (&heat_Req);
+	res->heater = reverse_hysteresis (&heat_Req);
 
 	HYS cool_Req = {
 		stato.second, 
@@ -45,21 +41,17 @@ bool_triple findHeater (TIME req, usi stag, usi temperatura_inside,
 		cool_dT_inf, 
 		cool_dT_sup
 	};
-	res.second = hysteresis (&cool_Req);
+	res->cooler = hysteresis (&cool_Req);
 
-	if (res.first == true && res.second == true){
+	if (res->heater == true && res->cooler == true){
 		char msg1[] = "%i/%i %i:%i | findHeater reported double true output\n";
 		char msg2[] = "\tseason: %i + hum: %i + state: %i %i\n";
 
 		printf(msg1, req.day, req.month, req.hour, req.minute);
 		printf(msg2, stag, temp_best, stato.first, stato.second);
 		printf("Override, switching both off... ");
-		res.first = false;
-		res.second = false;
+		res->heater = false;
+		res->cooler = false;
 		printf("done.\n");
 	}
-
-	return res;
 }
-
-

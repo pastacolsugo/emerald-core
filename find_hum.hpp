@@ -1,4 +1,4 @@
-bool_pair findHum (TIME req, usi stag, usi hum_sens, bool_pair stato){
+void findHum (TIME req, usi stag, usi hum_sens, bool_pair stato, OUT* res){
 	// res.first	=	humidifier output
 	// res.second	=	dehumidifier output
 
@@ -14,29 +14,25 @@ bool_pair findHum (TIME req, usi stag, usi hum_sens, bool_pair stato){
 		}
 	}
 
-	bool_pair res;
-
 	HYS humReq = {
 		stato.first, hum_sens, hum_zero-dU_inf, hum_dU_inf, hum_dU_sup
 	};
-	res.first = reverse_hysteresis (&humReq);
+	res->hum = reverse_hysteresis (&humReq);
 
 	HYS dehumReq = {
 		stato.second, hum_sens, hum_zero+dU_sup, hum_dU_inf, hum_dU_sup
 	};
-	res.second = hysteresis (&dehumReq);
+	res->dehum = hysteresis (&dehumReq);
 
-	if (res.first == true && res.second == true){
+	if (res->hum == true && res->dehum == true){
 		char msg1[] = "%i/%i - %i:%i :: findHum reported double true output\n";
 		char msg2[] = "\tseason: %i + hum: %i + state: %i %i\n";
 		
 		printf(msg1, req.day, req.month, req.hour, req.minute);
 		printf(msg2, stag, hum_sens, stato.first, stato.second);
 		printf("System override, switching both off... ");
-		res.first = false;
-		res.second = false;
+		res->hum = false;
+		res->dehum = false;
 		printf("done.\n");
 	}
-
-	return res;
 }

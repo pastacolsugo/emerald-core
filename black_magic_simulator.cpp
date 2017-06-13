@@ -1,4 +1,5 @@
 #include <cstdio>
+#include "control.hpp"
 #include "data_struct.hpp"
 #include "programma.hpp"
 #include "getters.hpp"
@@ -38,37 +39,39 @@ OUT black_magic_box (black_magic_data req, usi* seas){
 	*seas = current_season;
 	// printf ("stagione = %d\n", current_season);
 
+	OUT res = {false, false, false, false, false, false, false, false};
+	
 	// compute light status
-	bool light_output 	= findLight (&req.time, &current_season);
-	bool light_2_output = findLight2 (&req.time, &current_season);
-	bool water_output	= findWater (&req.time, &current_season);
 	
-	// create state variable for temperature managing group
-	bool_pair heat_state = makeBoolPair (req.output.heater, req.output.cooler);
+	if (CONTROL_LIGHT1){
+		res.light 	= findLight (&req.time, &current_season);
+	}
+	
+	if (CONTROL_LIGHT2) {
+		res.light2  = findLight2 (&req.time, &current_season);
+	}
 
-	// computing temperature management output
-	bool_triple heater_output = findHeater (req.time, current_season, 
-		req.temperature_inside, req.temperature_outside, heat_state);
+	if (CONTROL_WATER) {
+		res.water 	= findWater (&req.time, &current_season);
+	}
 	
-	// create state variable for humidity managing group
-	bool_pair hum_state = makeBoolPair (req.output.hum, req.output.dehum);
+	if (CONTROL_HEAT){
+		// create state variable for temperature managing group
+		bool_pair heat_state = makeBoolPair (req.output.heater, req.output.cooler);
 
-	// computing humidity management output
-	// bool_pair hum_output = findHum (req.time, current_season,
-	// 	req.humidity, hum_state);
-	bool_pair hum_output = 	makeBoolPair (false, false);
+		// computing temperature management output
+		findHeater (req.time, current_season, req.temperature_inside,
+		req.temperature_outside, heat_state, &res);
+	}
 	
-	// pack output data to be sent back
-	OUT res = {
-		light_output, 
-		light_2_output, 
-		water_output,
-		heater_output.first, // heater
-		heater_output.second, // cooler 
-		heater_output.third, // air source
-		hum_output.first, // humidifier
-		hum_output.second // dehumidifier
-	};
+	if (CONTROL_HUMIDITY){
+		// create state variable for humidity managing group
+		bool_pair hum_state = makeBoolPair (req.output.hum, req.output.dehum);
+
+		// computing humidity management output
+		findHum (req.time, current_season,
+			req.humidity, hum_state, &res);
+	}
 
 	return res;
 }
@@ -103,7 +106,11 @@ int main (){
 		// printf("%i\t%hu\t\t", input.output.heater, input.temperature);
 		printout (output1, input);
 
-		//apply output1
+		// 
+		// apply output1
+		// 
+
+
 
 		// update screen
 		screen lcd_data = {
