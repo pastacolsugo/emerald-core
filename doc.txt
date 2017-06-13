@@ -1,0 +1,40 @@
+Emerald Core v2.0
+
+Emerald is the core software upon which the Emerald Box automated greenhouse
+is based.
+This is version two, it's still under developement and there will be for sure
+version 3.0.
+
+The Core has been built keeping in mind modularity, maintainability and 
+readability in mind.
+
+Emerald Core is the control software that, given the user's schedule and the 
+environment values (sensor readings), compute the output for the actuators.
+It lacks the hardware interface, which depends on the project 
+implementation.
+
+Each control is easily "muted" during implementation by editing the 
+control.hpp file.
+
+Available controls:
+	- Light1 and Light2:
+		Two different and independent sets of lights, to accomodate different 
+		needs.
+	- Water:
+		Watering line
+	- Temperature:
+		ON-OFF air heater and cooler. Full control on the double hysteresis 
+		parameters.
+	- Humidity:
+		ON-OFF air humidifier and dehumidifier. Full control on the double 
+		hysteresis parameters.
+	- Air source:
+		based on inside and outside temperature it decides whether to pick air 
+		from inside or outside.
+
+Each control features multi seasonal schedule. Based on the date of the year 
+it's possible to have different season, each one with it's own schedule.
+
+CODE:
+
+	Black_magic_simulator
