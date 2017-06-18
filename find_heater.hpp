@@ -29,6 +29,7 @@ void findHeat (TIME req, usi stag, usi temperatura_inside,
 
 		temp_best = (res->air_source)? t_in : t_out;
 	} else {
+		res -> air_source = true; // air from inside
 		temp_best = t_in;
 	}
 
