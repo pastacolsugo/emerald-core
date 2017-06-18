@@ -41,8 +41,7 @@ OUT black_magic_box (black_magic_data req, usi* seas){
 
 	OUT res = {false, false, false, false, false, false, false, false};
 	
-	// compute light status
-	
+	// compute light state
 	if (CONTROL_LIGHT1){
 		res.light 	= findLight (&req.time, &current_season);
 	}
@@ -57,10 +56,11 @@ OUT black_magic_box (black_magic_data req, usi* seas){
 	
 	if (CONTROL_HEAT){
 		// create state variable for temperature managing group
-		bool_pair heat_state = makeBoolPair (req.output.heater, req.output.cooler);
+		bool_pair heat_state = makeBoolPair (req.output.heater, 
+			req.output.cooler);
 
 		// computing temperature management output
-		findHeater (req.time, current_season, req.temperature_inside,
+		findHeat (req.time, current_season, req.temperature_inside,
 		req.temperature_outside, heat_state, &res);
 	}
 	
@@ -104,7 +104,7 @@ int main (){
 		output1 = black_magic_box (input, &season);
 
 		// printf("%i\t%hu\t\t", input.output.heater, input.temperature);
-		printout (output1, input);
+		// printout (output1, input);
 
 		// 
 		// apply output1
