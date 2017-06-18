@@ -2,8 +2,6 @@ Emerald Core v2.0
 
 Emerald is the core software upon which the Emerald Box automated greenhouse
 is based.
-This is version two, it's still under developement and there will be for sure
-version 3.0.
 
 The Core has been built keeping in mind modularity, maintainability and 
 readability in mind.

@@ -1,57 +1,32 @@
 
-TIME getTime (){
-	TIME res;
+void getTime (TIME* res){
 	// printf ("Inserisci:MM\tGG\thh\tmm\n");
- 	scanf ("%hu %hu %hu %hu", &res.month, &res.day, &res.hour, &res.minute);
+ 	scanf ("%hu %hu %hu %hu", &res->month, &res->day, &res->hour, &res->minute);
 
- 	if (res.month > 12 || res.day > 31 || res.hour > 24 || res.minute > 59){
- 		res.month = 0;
- 		res.day = 0;
- 		res.hour = 0;
- 		res.minute = 0;
- 	}
-		
-	return res;
+ 	if (res->month > 12 || res->day > 31 || res->hour > 24 || res->minute > 59){
+ 		res->month = 0;
+ 		res->day = 0;
+ 		res->hour = 0;
+ 		res->minute = 0;
+ 	}		
 }
 
-usi getTemp (){
-	usi res = 0;
+void getTemp (usi* res){
 	// printf("Inserisci la temperatura: ");
-	scanf ("%hu", &res);
-	return res;
+	scanf ("%hu", res);
 }
 
-usi getTempInside (){
-	return getTemp();
+void getTempInside (usi* res){
+	getTemp(res);
 }
 
-usi getTempOutside (){
-	// return getTemp();
-	return 0;
+void getTempOutside (usi* res){
+	getTemp(res);
 }
 
-usi getHum (){
-	usi res = 0;
-	// printf("Inserisci l'umidita: ");
-	// scanf ("%hu", &res);
-	return res;
+void getHum (usi* res){
+	getTemp(res);
 }
-
-// DEPRECATED
-// with old output
-// black_magic_data packItUp (TIME tempo_attuale, usi temperatura_in,
-// 	usi temperatura_out, usi umidita, OUT old_output){
-
-// 	black_magic_data res = {
-// 		tempo_attuale, 
-// 		temperatura_in, 
-// 		temperatura_out, 
-// 		umidita, 
-// 		old_output
-// 	};
-
-// 	return res;
-// }
 
 void packItUp (TIME* time_now, usi* temperature_in,
 	usi* temperature_out, usi* hum, black_magic_data* res){
@@ -63,27 +38,30 @@ void packItUp (TIME* time_now, usi* temperature_in,
 
 }
 
-black_magic_data getData (){
-	black_magic_data response;
-
+void getData (black_magic_data* response){
 	// reading time from the RTC
-	TIME current_time = getTime();
+	getTime (&(response->time));
 
 	// reading inside temperature
-	usi current_temp_inside = getTempInside();
-	// usi act_temp_inside = 0;
+	if (CONTROL_HEAT){
+		getTempInside(&(response->temperature_inside));
+		// usi act_temp_inside = 0;
+	}
 
 	// reading outside temperature
-	usi current_temp_outside = getTempOutside();
-	// usi act_temp_outside = 0;
+	if (CONTROL_AIR_SOURCE){
+		getTempOutside(&(response->temperature_outside));
+		// usi act_temp_outside = 0;
+	}
 
 	// reading inside humidity
-	usi current_hum = getHum();
+	if (CONTROL_HUMIDITY){
+		getHum(&(response->humidity));
+	}
 
 	// create a variable containing all the data needed
 	// time, sensor reading and last output configuration
-	packItUp (&current_time, &current_temp_inside, &current_temp_outside,
-		&current_hum, &response);
+	// packItUp (&current_time, &current_temp_inside, &current_temp_outside,
+		// &current_hum, &response);
 
-	return response;
 }

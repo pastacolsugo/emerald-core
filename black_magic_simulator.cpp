@@ -91,7 +91,7 @@ int main (){
 	while (true){
 		black_magic_data input;
 
-		input = getData();	
+		getData(&input);	
 
 		input.output = output2;
 		
