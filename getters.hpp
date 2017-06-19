@@ -1,7 +1,7 @@
 
 void getTime (TIME* res){
 	// printf ("Inserisci:MM\tGG\thh\tmm\n");
- 	scanf ("%hu %hu %hu %hu", &res->month, &res->day, &res->hour, &res->minute);
+ 	// scanf ("%hu %hu %hu %hu", &res->month, &res->day, &res->hour, &res->minute);
 
  	if (res->month > 12 || res->day > 31 || res->hour > 24 || res->minute > 59){
  		res->month = 0;
